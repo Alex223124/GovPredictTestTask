@@ -3,8 +3,8 @@ class CreateFederalLegislators < ActiveRecord::Migration
     create_table :federal_legislators do |t|
       t.string :first_name
       t.string :last_name
-      t.datetime :legislator_enters_office_on
-      t.datetime :legislator_leaves_office_on
+      t.datetime :enters_office_on
+      t.datetime :leaves_office_on
 
       t.timestamps null: false
     end

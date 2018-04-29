@@ -69,6 +69,6 @@ class FederalLegislatorsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def federal_legislator_params
-      params.require(:federal_legislator).permit(:first_name, :last_name, :legislator_enters_office_on, :legislator_leaves_office_on)
+      params.require(:federal_legislator).permit(:first_name, :last_name, :enters_office_on, :leaves_office_on)
     end
 end
