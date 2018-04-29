@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :messages
   resources :social_media_accounts
   resources :federal_legislators
   resources :people
