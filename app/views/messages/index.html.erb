@@ -2,6 +2,21 @@
 
 <h1>Listing Messages</h1>
 
+<%= form_tag messages_path, method: :get, id: 'messages-form' do %>
+
+    <%= fields_for :filter do |f| %>
+        Starts at
+        <%= f.text_field :date_start, class: 'datepicker'%>
+        Ends at
+        <%= f.text_field :date_end, class: 'datepicker' %>
+    <% end %>
+
+    <%= submit_tag "Apply filters" %>
+
+<% end %>
+
+Amout of results:<%= @messages.count %>
+    <% if @messages.present? %>
 <table>
   <thead>
     <tr>
@@ -25,7 +40,7 @@
     <% end %>
   </tbody>
 </table>
-
+<% end %>
 <br>
 
 <%= link_to 'New Message', new_message_path %>

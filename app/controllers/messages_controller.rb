@@ -4,7 +4,8 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.all
+    @filter_form = MessagesFilterForm.new(filter_params)
+    @messages = @filter_form.apply_filter(Message.all)
   end
 
   # GET /messages/1
@@ -70,5 +71,11 @@ class MessagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
       params.require(:message).permit(:link, :posted_at, :content)
+    end
+
+    def filter_params
+      if params[:commit] == "Apply filters"
+        params.require(:filter).permit(:date_start, :date_end)
+      end
     end
 end
