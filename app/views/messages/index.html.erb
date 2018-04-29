@@ -9,6 +9,8 @@
         <%= f.text_field :date_start, class: 'datepicker'%>
         Ends at
         <%= f.text_field :date_end, class: 'datepicker' %>
+        From social media:
+        <%= f.select(:social_media_types, MessagesFilterForm::SOCIAL_MEDIA.map { |value| [ value, value ] },{ :prompt => true }, :multiple => true) %>
     <% end %>
 
     <%= submit_tag "Apply filters" %>
