@@ -35,9 +35,9 @@ ActiveRecord::Schema.define(version: 20180429071244) do
     t.string   "link"
     t.datetime "posted_at"
     t.text     "content"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.integer  "social_media_account"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "social_media_account_id"
   end
 
   create_table "people", force: :cascade do |t|
