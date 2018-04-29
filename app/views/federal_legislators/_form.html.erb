@@ -1,0 +1,33 @@
+<%= form_for(@federal_legislator) do |f| %>
+  <% if @federal_legislator.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@federal_legislator.errors.count, "error") %> prohibited this federal_legislator from being saved:</h2>
+
+      <ul>
+      <% @federal_legislator.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :first_name %><br>
+    <%= f.text_field :first_name %>
+  </div>
+  <div class="field">
+    <%= f.label :last_name %><br>
+    <%= f.text_field :last_name %>
+  </div>
+  <div class="field">
+    <%= f.label :legislator_enters_office_on %><br>
+    <%= f.datetime_select :legislator_enters_office_on %>
+  </div>
+  <div class="field">
+    <%= f.label :legislator_leaves_office_on %><br>
+    <%= f.datetime_select :legislator_leaves_office_on %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

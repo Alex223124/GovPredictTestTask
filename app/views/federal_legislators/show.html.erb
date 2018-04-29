@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @federal_legislator.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @federal_legislator.last_name %>
+</p>
+
+<p>
+  <strong>Legislator enters office on:</strong>
+  <%= @federal_legislator.legislator_enters_office_on %>
+</p>
+
+<p>
+  <strong>Legislator leaves office on:</strong>
+  <%= @federal_legislator.legislator_leaves_office_on %>
+</p>
+
+<%= link_to 'Edit', edit_federal_legislator_path(@federal_legislator) %> |
+<%= link_to 'Back', federal_legislators_path %>
