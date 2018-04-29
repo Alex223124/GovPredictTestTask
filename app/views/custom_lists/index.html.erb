@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Custom Lists</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @custom_lists.each do |custom_list| %>
+      <tr>
+        <td><%= custom_list.title %></td>
+        <td><%= link_to 'Show', custom_list %></td>
+        <td><%= link_to 'Edit', edit_custom_list_path(custom_list) %></td>
+        <td><%= link_to 'Destroy', custom_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Custom list', new_custom_list_path %>
