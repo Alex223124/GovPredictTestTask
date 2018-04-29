@@ -75,7 +75,7 @@ class MessagesController < ApplicationController
 
     def filter_params
       if params[:commit] == "Apply filters"
-        params.require(:filter).permit(:date_start, :date_end, social_media_types:[])
+        params.require(:filter).permit(:date_start, :date_end, lists:[], social_media_types:[])
       end
     end
 end
