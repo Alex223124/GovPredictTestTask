@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @social_media_account.name %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @social_media_account.url %>
+</p>
+
+<p>
+  <strong>Media type:</strong>
+  <%= @social_media_account.media_type %>
+</p>
+
+<%= link_to 'Edit', edit_social_media_account_path(@social_media_account) %> |
+<%= link_to 'Back', social_media_accounts_path %>
