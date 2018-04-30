@@ -222,6 +222,62 @@ describe MessagesFilterForm do
     end
 
   end
-  
+
+  context "#filter_by_static_lists" do
+
+    context "when @lists contains allowed static lists" do
+
+      before(:each) do
+        @first = create(:message, :with_legislator_and_twitter_soc_media_account)
+        @second = create(:message, :with_legislator_and_facebook_soc_media_account)
+      end
+
+      let(:expected_result) { [@first, @second] }
+
+      it "should retrun messages with static lists in sociable_type" do
+        filter_form = build(:messages_filter_form, :with_static_lists)
+        filter_form.instance_variable_set("@relation", Message.all)
+        filter_form.send(:filter_by_static_lists)
+        expect(filter_form.instance_variable_get("@messages_from_static_lists")).to match_array(expected_result)
+      end
+
+    end
+
+    context "when @lists doesnt contain allowed static lists" do
+
+      before(:each) do
+        @first = create(:message)
+        @second = create(:message)
+        @third = create(:message)
+      end
+
+      it "shouldn't set @messages_from_static_lists" do
+        filter_form = build(:messages_filter_form)
+        filter_form.instance_variable_set("@relation", Message.all)
+        filter_form.send(:filter_by_static_lists)
+        expect(filter_form.instance_variable_get("@messages_from_static_lists")).to eq(nil)
+      end
+
+    end
+
+    context "when @lists contains incorrect data" do
+
+      before(:each) do
+        @first = create(:message)
+        @second = create(:message)
+        @third = create(:message)
+      end
+
+      it "shouldn't set @messages_from_static_lists" do
+        filter_form = build(:messages_filter_form, :with_incorrect_lists_names)
+        filter_form.instance_variable_set("@relation", Message.all)
+        filter_form.send(:filter_by_static_lists)
+        expect(filter_form.instance_variable_get("@messages_from_static_lists")).to eq(nil)
+      end
+
+    end
+
+  end
+
 end
 
