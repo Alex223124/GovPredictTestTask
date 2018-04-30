@@ -134,5 +134,30 @@ describe MessagesFilterForm do
 
   end
 
+  context "#select_allowed_social_media" do
+
+    context "when @social_media_types contains allowed social media types" do
+
+      it "should select allowed social media types" do
+        filter_form = build(:messages_filter_form, :with_allowed_social_media_types)
+        list = filter_form.send(:select_allowed_social_media)
+        expected_result = ["twitter", "facebook"]
+        expect(list).to match_array(expected_result)
+      end
+
+    end
+
+    context "when @social_media_types doesnt contain allowed social media sites" do
+
+        it "should return blank array" do
+          filter_form = build(:messages_filter_form, :with_incorrect_lists_names)
+          list = filter_form.send(:select_allowed_social_media)
+          expect(list).to match_array([])
+        end
+
+    end
+
+  end
+
 end
 
