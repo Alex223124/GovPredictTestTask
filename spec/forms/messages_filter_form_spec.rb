@@ -327,6 +327,62 @@ describe MessagesFilterForm do
     end
 
   end
-  
+
+  context "#merge_static_and_custom_lists_results" do
+
+    before(:each) do
+      @first = create(:message)
+      @second = create(:message)
+    end
+
+    context "when @messages_from_static_lists and @messages_from_custom_lists are set correctly" do
+
+      it "should set @realtion with sum of given messages from static and custom lists" do
+        filter_form = build(:messages_filter_form)
+        filter_form.instance_variable_set("@messages_from_static_lists", [@first])
+        filter_form.instance_variable_set("@messages_from_custom_lists", [@second])
+        filter_form.send(:merge_static_and_custom_lists_results)
+        expect(filter_form.instance_variable_get("@relation")).to match_array([@first, @second])
+      end
+
+    end
+
+    context "when @messages_from_static_lists and @messages_from_custom_lists are set incorrectly" do
+
+      it "should rails an error" do
+        filter_form = build(:messages_filter_form)
+        filter_form.instance_variable_set("@messages_from_static_lists", @first)
+        filter_form.instance_variable_set("@messages_from_custom_lists", @second)
+        expect{ filter_form.send(:merge_static_and_custom_lists_results) }.to raise_error
+      end
+
+    end
+
+    context "when only @messages_from_static_lists is set" do
+
+      it "should set @realtion with objects from @messages_from_static_lists" do
+        filter_form = build(:messages_filter_form)
+        filter_form.instance_variable_set("@messages_from_static_lists", @first)
+        filter_form.instance_variable_set("@messages_from_custom_lists", nil)
+        filter_form.send(:merge_static_and_custom_lists_results)
+        expect(filter_form.instance_variable_get("@relation")).to eq(@first)
+      end
+
+    end
+
+    context "when only @messages_from_custom_lists is set" do
+
+      it "should set @realtion with objects from @messages_from_static_lists" do
+        filter_form = build(:messages_filter_form)
+        filter_form.instance_variable_set("@messages_from_static_lists", nil)
+        filter_form.instance_variable_set("@messages_from_custom_lists", @second)
+        filter_form.send(:merge_static_and_custom_lists_results)
+        expect(filter_form.instance_variable_get("@relation")).to eq(@second)
+      end
+
+    end
+
+  end
+
 end
 
