@@ -279,5 +279,54 @@ describe MessagesFilterForm do
 
   end
 
+  context "#filter_by_custom_lists" do
+
+    before(:each) do
+      @first = create(:message, :with_person_and_twitter_soc_media_account)
+      @second = create(:message, :with_person_and_facebook_soc_media_account)
+      create(:message)
+      create(:message)
+    end
+
+    context "when @lists contains allowed custom lists" do
+
+      let(:expected_result) { [@first, @second] }
+
+      it "should return messages with custom lists retrieved by association from persona table" do
+        filter_form = build(:messages_filter_form, :with_custom_lists)
+        filter_form.instance_variable_set("@relation", Message.all)
+        MessagesFilterForm.const_set("CUSTOM_LISTS", ["Custom List One", "Custom List Two", "Custom List Three" ])
+        filter_form.send(:filter_by_custom_lists)
+        expect(filter_form.instance_variable_get("@messages_from_custom_lists")).to match_array(expected_result)
+      end
+
+    end
+
+    context "when @lists doesnt contain allowed custom lists" do
+
+      it "shouldn't set @messages_from_custom_lists" do
+        filter_form = build(:messages_filter_form)
+        filter_form.instance_variable_set("@relation", Message.all)
+        MessagesFilterForm.const_set("CUSTOM_LISTS", ["Custom List One", "Custom List Two", "Custom List Three" ])
+        filter_form.send(:filter_by_custom_lists)
+        expect(filter_form.instance_variable_get("@messages_from_custom_lists")).to eq(nil)
+      end
+
+    end
+
+    context "when @lists contains incorrect data" do
+
+      it "shouldn't set @messages_from_custom_lists" do
+        filter_form = build(:messages_filter_form, :with_incorrect_lists_names)
+        filter_form.instance_variable_set("@relation", Message.all)
+        MessagesFilterForm.const_set("CUSTOM_LISTS", ["Custom List One", "Custom List Two", "Custom List Three" ])
+        filter_form.send(:filter_by_custom_lists)
+        expect(filter_form.instance_variable_get("@messages_from_custom_lists")).to eq(nil)
+      end
+
+    end
+
+  end
+  
 end
 
