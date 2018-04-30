@@ -24,7 +24,7 @@ class MessagesFilterForm
   private
 
   def filter_by_date_range
-    if (@date_start.present? && @date_end.present?)
+    if date_range_correct?
       @relation = @relation.where('(messages.posted_at >= ? AND messages.posted_at <= ?)', @date_start, @date_end)
     end
   end
@@ -69,6 +69,10 @@ class MessagesFilterForm
 
   def select_allowed_social_media
     @social_media_types.select {|type| SOCIAL_MEDIA.include?(type)}
+  end
+
+  def date_range_correct?
+    (@date_start.present? && @date_end.present?) && (@date_start.is_a?(Date) && @date_end.is_a?(Date))
   end
 
 end
