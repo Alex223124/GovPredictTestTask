@@ -86,5 +86,53 @@ describe MessagesFilterForm do
 
   end
 
+  context "#select_(allowed_list)" do
+
+    context "when @lists contains allowed static lists" do
+
+      it "should select allowed lists" do
+        filter_form = build(:messages_filter_form, :with_static_lists)
+        list = filter_form.send(:select_, MessagesFilterForm::STATIC_LISTS)
+        expected_result = ["FederalLegislator"]
+        expect(list).to match_array(expected_result)
+      end
+
+    end
+
+    context "when @lists doesnt contain allowed static lists" do
+
+      it "should return blank array" do
+        filter_form = build(:messages_filter_form, :with_incorrect_lists_names)
+        list = filter_form.send(:select_, MessagesFilterForm::STATIC_LISTS)
+        expect(list).to match_array([])
+      end
+
+    end
+
+    context "when @lists contains allowed custom lists" do
+
+      it "should select custom lists" do
+        filter_form = build(:messages_filter_form, :with_custom_lists)
+        MessagesFilterForm.const_set("CUSTOM_LISTS", ["Custom List One", "Custom List Two", "Custom List Three" ])
+        list = filter_form.send(:select_, MessagesFilterForm::CUSTOM_LISTS)
+        expected_result = ["Custom List One", "Custom List Two", "Custom List Three" ]
+        expect(list).to match_array(expected_result)
+      end
+
+    end
+
+    context "when @lists doesnt contain allowed custom lists" do
+
+      it "should return blank array" do
+        filter_form = build(:messages_filter_form, :with_incorrect_lists_names)
+        MessagesFilterForm.const_set("CUSTOM_LISTS", ["Custom List One", "Custom List Two", "Custom List Three" ])
+        list = filter_form.send(:select_, MessagesFilterForm::CUSTOM_LISTS)
+        expect(list).to match_array([])
+      end
+
+    end
+
+  end
+
 end
 
